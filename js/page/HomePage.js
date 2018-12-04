@@ -19,6 +19,7 @@ import HomeIndex from '../page/Home/HomeIndex'
 import MyPage from '../page/my/MyPage'
 import EZSwiperDemo from '../demo/EZSwiper'
 import Swipper from '../demo/Swipper'
+import Xiding from '../demo/xiding'
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
     android:
@@ -79,6 +80,7 @@ export default class HomePage extends Component {
                         renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#2196F3'}]} source={require('../../res/images/ic_trending.png')} />}
                         onPress={() => this.setState({ selectedTab: 'tb_mine' })}>
                         <MyPage {...this.props}></MyPage>
+                        {/* <Xiding/> */}
                     </TabNavigator.Item>
                 </TabNavigator>
             </View>

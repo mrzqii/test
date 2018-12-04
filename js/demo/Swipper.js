@@ -25,14 +25,14 @@ export default class Swipper extends Component {
         }
     }
     componentDidMount() {
-        fetch("http://10.0.2.2:18081/b2c/api/shop/cart/get-cart-data.do?_=1543904137654")
-            .then((response) => response.json())        // json方式解析，如果是text就是 response.text()
-            .then((responseData) => {   // 获取到的数据处理
-                console.warn(`responseData:${responseData.data.count}`)
-            })
-            .catch((error) => {     // 错误处理 
-                console.warn(`error:${error}`)
-            })
+        // fetch("http://10.0.2.2:18081/b2c/api/shop/cart/get-cart-data.do?_=1543904137654")
+        //     .then((response) => response.json())        // json方式解析，如果是text就是 response.text()
+        //     .then((responseData) => {   // 获取到的数据处理
+        //         console.warn(`responseData:${responseData.data.count}`)
+        //     })
+        //     .catch((error) => {     // 错误处理 
+        //         console.warn(`error:${error}`)
+        //     })
     }
     render() {
         return (

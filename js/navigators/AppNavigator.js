@@ -13,6 +13,7 @@ import GoodsDetail from '../page/GoodsDetail/GoodsDetail'
 // import GoodItem from '../page/Home/GoodItem'
 import HomeIndex from '../page/Home/HomeIndex'
 import NewGood from '../page/Home/NewGood'
+import Login from '../page/my/Login'
 // import SortKeyPagePage from '../page/my/SortKeyPagePage'
 // import AboutMePage from '../page/about/AboutMePage'
 // import AboutPage from '../page/about/AboutPage'
@@ -42,6 +43,9 @@ export default AppNavigator = StackNavigator({
     NewGood:{
         screen: NewGood
     },
+    Login:{
+        screen: Login
+    }
     
     
 }, {

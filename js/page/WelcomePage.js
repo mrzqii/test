@@ -94,9 +94,9 @@ export default class WelcomePage extends Component {
                         btnStyle={styles.telBtn}
                         underlayColor=""
                         textStyle={styles.telText}
-                        btnName="手机号登陆"
+                        btnName="账号密码登陆"
                         onPress={() => {
-                            navigation.navigate('HomePage', { name: "动态的" })
+                            navigation.navigate('Login', { name: "参数" })
                         }}
                     />
                 </View>

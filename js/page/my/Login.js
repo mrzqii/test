@@ -9,7 +9,8 @@ import {
     View,
     TouchableOpacity
 } from 'react-native';
-
+import NavigationBar from '../../common/NavigationBar'
+import ViewUtils from '../../util/ViewUtils'
 
 export default class Login extends Component {
     constructor(props) {
@@ -17,17 +18,18 @@ export default class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            validcode:'',
+            validcode: '',
             valiImage: ''
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         this.setState({
-            valiImage:`http://10.0.2.2:18081/b2c/validcode.do?vtype=memberlogin&r=${+new Date}`
+            valiImage: `http://10.0.2.2:18081/b2c/validcode.do?vtype=memberlogin`
         })
 
     }
     async login() {
+        console.warn(this.username)
         const {
             username,
             password,
@@ -74,7 +76,7 @@ export default class Login extends Component {
         // }
 
         try {
-            
+
             let response = await fetch("http://10.0.2.2:18081/b2c/api/shop/member/login.do", {
                 method: "POST",
                 headers: {
@@ -91,15 +93,23 @@ export default class Login extends Component {
             console.warn(`err:${err}`);
         }
     }
-    _changeValiImage = ()=> {
+    _changeValiImage = () => {
         this.setState({
             valiImage: `http://10.0.2.2:18081/b2c/validcode.do?vtype=memberlogin&r=${+new Date}`
         })
     }
-    
     render() {
+        const { navigation } = this.props;
         return (
             <View style={styles.container}>
+                <NavigationBar
+                    title={'登陆'}
+                    statusBar={{backgroundColor:'steelblue'}}
+                    style={{height:40,backgroundColor: 'steelblue',}}
+                    leftButton={ViewUtils.getLeftButton(() => {
+                            navigation.navigate('WelcomePage', { name: "动态的" })
+                    })}
+                />
                 <View style={styles.view1}>
                     <TextInput
                         style={styles.textInput1}
@@ -162,6 +172,7 @@ export default class Login extends Component {
                     onPress={() => {
                         this._changeValiImage()
                     }}
+                    style={{ flexDirection: 'row', justifyContent: 'space-around', left: -50 }}
                 >
                     <Image
                         style={{ width: 100, height: 50 }}
@@ -199,7 +210,8 @@ const styles = StyleSheet.create({
         width: 22
     },
     textInput1: {
-        flex: 1,
+        // flex: 1,
+        width: 200,
         padding: 0,
         fontSize: 16,
         color: '#333',
@@ -210,6 +222,7 @@ const styles = StyleSheet.create({
     view1: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         marginBottom: 15,
     },
     text1: {

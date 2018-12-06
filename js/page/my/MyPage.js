@@ -16,7 +16,7 @@ import {
 import CustomKeyPage from './CustomKeyPage';
 import ButtonView from '../../common/ButtonView';
 import Xiding from '../../demo/xiding'
-import NavPage from '../../common/NavBar'
+import NavBar from '../../common/NavBar'
 
 let { width } = Dimensions.get('window')
 let navHeight = (Platform.OS === 'ios' ? 20 : 0) + 45
@@ -27,6 +27,8 @@ export default class MyPage extends Component {
         super(props);
         this.state = {
             opacity: 0,
+            topValue: 0,
+            headTop:0,
             userInfo: {
                 type: '新晋移民',
                 avatarUrl: 'https://gd1.alicdn.com/imgextra/i4/791105148/O1CN01uVEr3b1ntpQGtz8Cg_!!791105148.jpg_400x400.jpg',
@@ -66,14 +68,20 @@ export default class MyPage extends Component {
     }
     onScroll = (event) => {
         let offsetY = event.nativeEvent.contentOffset.y
-        console.warn(`1:${offsetY}`)
-        let opacity = offsetY / navHeight
-        console.warn(`2:${opacity}`)
+        let top = -45+(offsetY / 2.4)
+        if (top >= 0) {
+            top = 0
+        }
+        let headTop = -offsetY/1.5
+        let opacity = offsetY / navHeight -0.7 // 这里为了让不透明度变化的更加明显
+  
         // if(opacity > 5 || opacity < -5) { // 这里可以优化减少render， 1和0 滑快了会有些影响， 这里你可以看着给值， 当然也可以不优化
         //   return
         // }
         this.setState({
-            opacity
+            opacity,
+            topValue: top,
+            headTop
         })
     }
     _renderHead = () => {
@@ -83,7 +91,11 @@ export default class MyPage extends Component {
                 onPress={() => {
                     alert('.')
                 }}
-                activeOpacity={1}
+                style={{  position:'absolute',
+                top:this.state.headTop,
+                zIndex:10
+            }}
+                activeOpacity={0.5}
             >
                 <View style={styles.headSection}>
                     <View style={styles.avatar}>
@@ -113,7 +125,7 @@ export default class MyPage extends Component {
         )
     }
     _renderBody = () => {
-        const {favorite, buyer } = this.state.userInfo
+        const { favorite, buyer } = this.state.userInfo
         return (
             <View style={{ padding: 30, flex: 1 }}>
                 <View style={styles.BuyerFavi}>
@@ -219,7 +231,7 @@ export default class MyPage extends Component {
         return data.map((items) => {
             return (
                 <View>
-                    {items.map((item,index) => {
+                    {items.map((item, index) => {
                         return (
                             <TouchableOpacity key={item.index}>
                                 <View style={{ flexDirection: 'row', paddingLeft: 30, marginBottom: 40 }}>
@@ -227,7 +239,7 @@ export default class MyPage extends Component {
                                         source={item.icon}
                                         style={{ width: 30, height: 30 }}
                                     />
-                                    <Text style={{fontSize:18}}>{item.title}</Text>
+                                    <Text style={{ fontSize: 18 }}>{item.title}</Text>
                                     {item.other ? <Text
                                         style={[styles.otherText, { marginRight: 20 }]}
                                     >{item.other}</Text> : null}
@@ -247,19 +259,26 @@ export default class MyPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <NavPage
+                <NavBar
                     title={'个人中心'}
                     opacity={this.state.opacity}
+                    top={this.state.topValue}
                 />
+                {this._renderHead()}
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     ref='scroll'
                     onScroll={this.onScroll}
                     scrollEventThrottle={50}
+                    style={{paddingTop:200}}
                 >
-                    {this._renderHead()}
+                    
                     {this._renderBody()}
                     {this._renderItem()}
+                    <View
+                        style={{height:500,width:'100%'}}
+                    >
+                    </View>
                 </ScrollView>
             </View>
         );
@@ -286,6 +305,7 @@ const styles = StyleSheet.create({
         padding: 2
     },
     headSection: {
+      
         height: 200,
         width: width,
         padding: 30,

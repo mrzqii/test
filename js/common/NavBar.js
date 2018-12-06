@@ -6,12 +6,12 @@ import { View, Text, StyleSheet, Platform, Dimensions } from 'react-native';
  * 自定义导航栏
  */
 let height = (Platform.OS === 'ios' ? 20 : 0) + 45
-export default class NavPage extends Component {
+export default class NavBar extends Component {
 
   render() {
-    let { opacity, children, title } = this.props
+    let { opacity, top,children, title } = this.props
     return (
-      <View style={[styles.container, { backgroundColor: `rgba(255,255,255, ${opacity})` }]}>
+      <View style={[styles.container, { backgroundColor: `rgba(255,255,255, ${opacity})`,top:top }]}>
         {
           <View style={{ alignItems: 'center', flex: 1 }}>
             {
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 20 : 0,
     paddingHorizontal: 10,
     position: 'absolute',
-    zIndex: 10
+    top:-45,
+    zIndex: 11
   },
   icon: {
     width: 21,
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
   }
 })
 
-NavPage.defaultProps = {
+NavBar.defaultProps = {
   title: 'title',
   opacity: 0
 }

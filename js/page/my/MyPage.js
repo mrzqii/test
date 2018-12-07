@@ -6,6 +6,7 @@ import {
     ScrollView,
     SectionList,
     Text,
+    TouchableHighlight,
     View,
     Dimensions,
     Platform,
@@ -28,7 +29,7 @@ export default class MyPage extends Component {
         this.state = {
             opacity: 0,
             topValue: 0,
-            headTop:0,
+            headTop: 0,
             userInfo: {
                 type: '新晋移民',
                 avatarUrl: 'https://gd1.alicdn.com/imgextra/i4/791105148/O1CN01uVEr3b1ntpQGtz8Cg_!!791105148.jpg_400x400.jpg',
@@ -68,13 +69,13 @@ export default class MyPage extends Component {
     }
     onScroll = (event) => {
         let offsetY = event.nativeEvent.contentOffset.y
-        let top = -45+(offsetY / 2.4)
+        let top = -45 + (offsetY / 2.4)
         if (top >= 0) {
             top = 0
         }
-        let headTop = -offsetY/1.5
-        let opacity = offsetY / navHeight -0.7 // 这里为了让不透明度变化的更加明显
-  
+        let headTop = -offsetY / 1.5
+        let opacity = offsetY / navHeight - 0.7 // 这里为了让不透明度变化的更加明显
+
         // if(opacity > 5 || opacity < -5) { // 这里可以优化减少render， 1和0 滑快了会有些影响， 这里你可以看着给值， 当然也可以不优化
         //   return
         // }
@@ -85,16 +86,18 @@ export default class MyPage extends Component {
         })
     }
     _renderHead = () => {
+        const { navigation } = this.props;
         const { avatarUrl, avatarName, type, Bought, focus, favorite } = this.state.userInfo
         return (
             <TouchableOpacity
                 onPress={() => {
-                    alert('.')
+                    navigation.navigate('UserInfo', { name: "动态的" })
                 }}
-                style={{  position:'absolute',
-                top:this.state.headTop,
-                zIndex:10
-            }}
+                style={{
+                    position: 'absolute',
+                    top: this.state.headTop,
+                    zIndex: 10
+                }}
                 activeOpacity={0.5}
             >
                 <View style={styles.headSection}>
@@ -125,12 +128,13 @@ export default class MyPage extends Component {
         )
     }
     _renderBody = () => {
+
         const { favorite, buyer } = this.state.userInfo
         return (
             <View style={{ padding: 30, flex: 1 }}>
                 <View style={styles.BuyerFavi}>
                     <View style={styles.Buyer}>
-                        <Text>我的买手</Text>
+                        <Text>我的关注</Text>
                         <View style={styles.BuyerAvatar}>
                             <View style={{ flexDirection: 'row' }}>
                                 {buyer.map((item) => {
@@ -152,7 +156,7 @@ export default class MyPage extends Component {
                         </View>
                     </View>
                     <View style={styles.Bfavi}>
-                        <Text>我的喜欢</Text>
+                        <Text>我的收藏</Text>
                         <View style={styles.BfaviNum}>
                             <Text
                                 style={{ fontSize: 18, color: '#333' }}
@@ -217,6 +221,11 @@ export default class MyPage extends Component {
                     icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
                     title: '供应商入住申请',
                     other: ''
+                },
+                {
+                    icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
+                    title: '帮助中心',
+                    other: ''
                 }
             ],
             [
@@ -233,8 +242,12 @@ export default class MyPage extends Component {
                 <View>
                     {items.map((item, index) => {
                         return (
-                            <TouchableOpacity key={item.index}>
-                                <View style={{ flexDirection: 'row', paddingLeft: 30, marginBottom: 40 }}>
+                            <TouchableHighlight
+                                underlayColor={'#666'}
+                            >
+                                <View
+                                    key={index}
+                                    style={{ flexDirection: 'row', paddingLeft: 30, marginBottom: 40 }}>
                                     <Image
                                         source={item.icon}
                                         style={{ width: 30, height: 30 }}
@@ -248,7 +261,7 @@ export default class MyPage extends Component {
                                         source={arrow}
                                     />
                                 </View>
-                            </TouchableOpacity>
+                            </TouchableHighlight>
                         )
                     })}
                     <View style={styles.line}></View>
@@ -270,13 +283,13 @@ export default class MyPage extends Component {
                     ref='scroll'
                     onScroll={this.onScroll}
                     scrollEventThrottle={50}
-                    style={{paddingTop:200}}
+                    style={{ paddingTop: 200 }}
                 >
-                    
+
                     {this._renderBody()}
                     {this._renderItem()}
                     <View
-                        style={{height:500,width:'100%'}}
+                        style={{ height: 500, width: '100%' }}
                     >
                     </View>
                 </ScrollView>
@@ -305,7 +318,7 @@ const styles = StyleSheet.create({
         padding: 2
     },
     headSection: {
-      
+
         height: 200,
         width: width,
         padding: 30,

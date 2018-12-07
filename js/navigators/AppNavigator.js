@@ -13,10 +13,11 @@ import GoodsDetail from '../page/GoodsDetail/GoodsDetail'
 // import GoodItem from '../page/Home/GoodItem'
 import HomeIndex from '../page/Home/HomeIndex'
 import NewGood from '../page/Home/NewGood'
-import Login from '../page/my/Login'
-// import SortKeyPagePage from '../page/my/SortKeyPagePage'
-// import AboutMePage from '../page/about/AboutMePage'
-// import AboutPage from '../page/about/AboutPage'
+import Login from '../page/Login/Login'
+import Register from '../page/Login/Register'
+import UserInfo from '../page/my/UserInfo'
+import Address from '../page/my/UserInfo/Address'
+ 
 
 export default AppNavigator = StackNavigator({
     WelcomePage: {
@@ -27,6 +28,14 @@ export default AppNavigator = StackNavigator({
     },
     MyPage:{
         screen: MyPage
+    },
+    // 用户头像 会员名 地址
+    UserInfo:{
+        screen: UserInfo
+    },
+    // 用户地址
+    Address:{
+        screen: Address
     },
     // CustomKeyPage:{
     //     screen: CustomKeyPage
@@ -43,8 +52,13 @@ export default AppNavigator = StackNavigator({
     NewGood:{
         screen: NewGood
     },
+    // 登陆页面
     Login:{
         screen: Login
+    },
+    // 注册页面
+    Register:{
+        screen: Register
     }
     
     

@@ -81,7 +81,8 @@ export default class Login extends Component {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    cookie: "JSESSIONID=E65897EB8C07ADBD81F1700B870877B6; Hm_lvt_a630f96b6a9dd549675d26373853f7f1=1542876602; Hm_lvt_767a826e820eb7f9a1365b549a7b3693=1543903154; Hm_lpvt_767a826e820eb7f9a1365b549a7b3693=1544155118"
                 },
                 body: JSON.stringify(params)
             })
@@ -95,7 +96,7 @@ export default class Login extends Component {
     }
     _changeValiImage = () => {
         this.setState({
-            valiImage: `http://10.0.2.2:18081/b2c/validcode.do?vtype=memberlogin&r=${+new Date}`
+            valiImage: `http://10.0.2.2:18081/b2c/validcode.do?vtype=memberlogin${new Date().getTime()}`
         })
     }
     render() {
@@ -104,10 +105,13 @@ export default class Login extends Component {
             <View style={styles.container}>
                 <NavigationBar
                     title={'登陆'}
-                    statusBar={{backgroundColor:'steelblue'}}
-                    style={{height:40,backgroundColor: 'steelblue',}}
+                    statusBar={{backgroundColor:'steelblue',hidden:true}}
+                    style={{backgroundColor: 'steelblue',}}
                     leftButton={ViewUtils.getLeftButton(() => {
-                            navigation.navigate('WelcomePage', { name: "动态的" })
+                            navigation.goBack()
+                    })}
+                    rightButton={ViewUtils.getRightButton('注册',() => {
+                            navigation.navigate('Register')
                     })}
                 />
                 <View style={styles.view1}>

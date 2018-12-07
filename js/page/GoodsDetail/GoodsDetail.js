@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import {
     Platform,
     StyleSheet,
-    Button,
+    Dimensions,
     Image,
     Text,
     ScrollView,
@@ -23,8 +23,8 @@ import CountDown from '../../common/CountDown'
 import ShoppingExplanation from '../../common/ShoppingExplanation'
 import GoodsAuthor from './GoodsAuthor'
 import videoUrl from '../../../res/pageImage/xinyun2017.4.11.mp4'
-import Video from 'react-native-af-video-player'
-
+import Video from 'react-native-video'
+const { width, height } = Dimensions.get('window')
 
 class MyVideo extends Component {
     constructor(props) {
@@ -132,8 +132,14 @@ export default class GoodsDetail extends Component {
 
                 <ScrollView>
                     <View style={styles.sectionDetail}>
-                        <View>
-                            <MyVideo />
+                        <View style={{ flex: 1}}>
+                            <Video
+                            resizeMode={'stretch'}
+                                source={videoUrl}
+                                paused={false}
+                                controls={true}
+                                style={styles.backgroundVideo}
+                            />
                             <StatusBar goodsDetail={this.state.goodsDetail} />
                         </View>
                         <View style={{ flex: 1 }}>
@@ -148,8 +154,8 @@ export default class GoodsDetail extends Component {
                             data={this.state.authorInfo}
                         />
                     </View>
-                    <ShoppingExplanation/>
-                    
+                    <ShoppingExplanation />
+
                 </ScrollView>
                 <HandleBar
                     goodsDetail={this.state.goodsDetail}
@@ -316,7 +322,7 @@ class HandleBar extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-         
+
     },
     sectionDetail: {
         flex: 1,
@@ -429,5 +435,9 @@ const styles = StyleSheet.create({
         height: 400,
         width: '100%'
     },
+    backgroundVideo: {
+        width:width-50,
+        height: 400,
+    }
 
 });

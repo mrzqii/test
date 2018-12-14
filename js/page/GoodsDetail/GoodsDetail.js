@@ -24,6 +24,7 @@ import ShoppingExplanation from '../../common/ShoppingExplanation'
 import GoodsAuthor from './GoodsAuthor'
 import videoUrl from '../../../res/pageImage/xinyun2017.4.11.mp4'
 import Video from 'react-native-video'
+import {scaleSize,scaleHeight,setSpText2,} from '../../util/screenUtil'
 const { width, height } = Dimensions.get('window')
 
 class MyVideo extends Component {
@@ -46,7 +47,7 @@ export default class GoodsDetail extends Component {
         this.state = {
             goodsDetail: {
                 viewNum: 2121,
-                endTime: '2018-12-12',
+                endTime: '2018-12-16',
                 isCheck: false,
                 salePrice: 100,
                 payment: '', //定金
@@ -144,7 +145,7 @@ export default class GoodsDetail extends Component {
                         </View>
                         <View style={{ flex: 1 }}>
                             <Image
-                                style={{ width: '100%', height: 800 }}
+                                style={{ width: '100%', height:scaleHeight(600) }}
                                 source={{ uri: imageUrl }}
                             />
                         </View>
@@ -174,12 +175,13 @@ class StatusBar extends Component {
             <View style={{}}>
                 <View style={styles.dollar}>
                     <Image
-                        source={require('../../../res/pageImage/icon_order_money.png')}
+                        source={require('../../../res/image/rmb.png')}
                         style={{
                             top: -5,
-                            width: 40,
-                            height: 40,
+                            width:scaleSize(30),
+                            height: scaleSize(30),
                             zIndex: 1000,
+                            tintColor:'yellow'
                         }}
                     />
                 </View>
@@ -201,10 +203,10 @@ class StatusBar extends Component {
             <View style={styles.statusbar}>
                 <View style={styles.viewNum}>
                     <Image
-                        source={require('../../../res/pageImage/icon_tab_category_selected.png')}
+                        source={require('../../../res/image/view.png')}
                         style={{
-                            width: 25,
-                            height: 25
+                            width:scaleSize(20),
+                            height: scaleSize(20)
                         }}
                     />
                     <Text style={styles.text}>{viewNum}</Text>
@@ -334,23 +336,23 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     viewNum: {
-        width: 150,
-        height: 65,
+        width:scaleSize (100),
+        height:scaleHeight(55),
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        paddingLeft: 20,
+        paddingLeft: scaleSize(20),
         alignItems: 'center',
         backgroundColor: '#3A3A3A',
 
     },
     text: {
-        fontSize: 20,
+        fontSize:setSpText2(20),
         color: '#fff',
-        marginLeft: 20,
+        marginLeft:scaleSize(10),
     },
     endTime: {
-        width: 220,
-        height: 65,
+        width:scaleSize(100),
+        height:scaleHeight(55),
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: '#000',
@@ -363,7 +365,7 @@ const styles = StyleSheet.create({
     },
     payment: {
         flex: 1,
-        height: 65,
+        height:scaleHeight(55),
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -387,14 +389,14 @@ const styles = StyleSheet.create({
     },
     price: {
         color: '#fff',
-        marginLeft: 20
+        marginLeft: scaleSize(13)
     },
     salePrice: {
-        width: 60,
-        height: 40,
+        width:scaleSize (35),
+        height:scaleHeight(25),
         textAlign: 'center',
         color: '#fff',
-        paddingTop: 9,
+        paddingTop: scaleSize(3),
         borderRadius: 7,
         backgroundColor: '#E4007F',
     },

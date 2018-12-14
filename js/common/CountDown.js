@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   defaultTime: {
     paddingHorizontal: 3,
     backgroundColor: 'rgba(85, 85, 85, 1)',
-    fontSize: 12,
+    fontSize: 10,
     color: 'white',
     marginHorizontal: 3,
     borderRadius: 2,

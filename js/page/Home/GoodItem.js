@@ -19,7 +19,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Avartar from '../../common/avatar'
- 
+
 export default class GoodItem extends Component {
     constructor(props) {
         super(props);
@@ -44,21 +44,30 @@ export default class GoodItem extends Component {
     // }
     render() {
         const navigation = this.props.navigation;
-        let { goodsId,avatarUrl, avatarName, goodImageUrl, goodDscription, starNum, sharenUM } = this.props.info
+        let { goodsId, avatarUrl, avatarName, goodImageUrl, goodDscription, starNum, sharenUM } = this.props.info
         return (
             <View style={styles.container}>
                 <View
                     style={styles.avatarWrapper}
                 >
-                <Avartar
-                    avatarName={avatarName}
-                    avatarUrl={avatarUrl}
-                />
-                     
+                    <Avartar
+                        avatarName={avatarName}
+                        avatarUrl={avatarUrl}
+                    />
+                    <Image
+                        style={{
+                            position: 'absolute',
+                            right: 0, top: 0,
+                            width: 20, height: 20,
+                            tintColor: '#222',
+                        }}
+                        source={require('../../../res/image/enter.png')}
+                    />
+
                 </View>
                 <TouchableOpacity onPress={() => {
-                        navigation.navigate('GoodsDetail', {name: goodsId})
-                    }}>
+                    navigation.navigate('GoodsDetail', { name: goodsId })
+                }}>
                     <View>
                         <Image
                             style={styles.pic}
@@ -71,19 +80,23 @@ export default class GoodItem extends Component {
                     <View>
                         <View style={styles.starShare}>
                             <View style={styles.star}>
-                                <MaterialCommunityIcons
-                                    name={'share'}
-                                    size={20}
-                                    color={'#fff'}
+                                <Image
+                                    style={{
+                                        width: 16, height: 16,
+                                        marginRight:3
+                                    }}
+                                    source={require('../../../res/image/collect.png')}
                                 />
                                 <Text style={styles.text}>{starNum}</Text>
                             </View>
                             <View style={styles.vline}></View>
                             <View style={styles.share}>
-                                <MaterialCommunityIcons
-                                    name={'share'}
-                                    size={20}
-                                    color={'#fff'}
+                            <Image
+                                    style={{
+                                        width: 16, height: 14,
+                                        marginRight:5,top:2
+                                    }}
+                                    source={require('../../../res/image/favorite.png')}
                                 />
                                 <Text style={styles.text}>{sharenUM}</Text>
                             </View>
@@ -101,7 +114,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginRight: 20,
         marginLeft: 20,
-         
+
     },
     avatarWrapper: {
         flexDirection: 'row',
@@ -113,8 +126,8 @@ const styles = StyleSheet.create({
         height: 30,
         borderRadius: 15
     },
-    pic:{
-        height:300
+    pic: {
+        height: 300
     },
     dis: {
         marginTop: 10,
@@ -133,7 +146,7 @@ const styles = StyleSheet.create({
     starShare: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        flex:1,
+        flex: 1,
         height: 40,
         backgroundColor: '#111',
         borderRadius: 5,
@@ -142,14 +155,14 @@ const styles = StyleSheet.create({
     star: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginLeft:10,
-        marginRight:10
+        marginLeft: 10,
+        marginRight: 10
     },
     share: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginLeft:10,
-        marginRight:10
+        marginLeft: 10,
+        marginRight: 10
     },
     text: {
         color: '#fff',

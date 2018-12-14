@@ -13,7 +13,7 @@ import {
     Text,
     View,
 } from 'react-native';
-
+import {scaleSize,scaleHeight,setSpText2,} from './screenUtil'
 export default class ViewUtils {
     /**
      * 获取设置页的Item
@@ -51,11 +51,11 @@ export default class ViewUtils {
     }
     static getLeftButton(callBack) {
         return <TouchableOpacity
-            style={{padding: 8}}
+            style={{padding: 25}}
             onPress={callBack}>
             <Image
-                style={{width: 26, height: 26,}}
-                source={require('../../res/images/ic_arrow_back_white_36pt.png')}/>
+                style={{width:scaleSize(18), height: scaleHeight(18),tintColor:'#000'}}
+                source={require('../../res/image/arrowLeft.png')}/>
         </TouchableOpacity>
     }
 
@@ -64,8 +64,18 @@ export default class ViewUtils {
             style={{alignItems: 'center',}}
             onPress={callBack}>
             <View style={{marginRight: 10}}>
-                <Text style={{fontSize: 20, color: '#FFFFFF',}}>{title}</Text>
+                <Text style={{fontSize: 20, color: '#222',}}>{title}</Text>
             </View>
+        </TouchableOpacity>
+    }
+    static getRightImageButton(callBack) {
+        return <TouchableOpacity
+            style={{alignItems: 'center',}}
+            onPress={callBack}>
+            <Image
+                style={{width:scaleSize(20), height:scaleHeight(18),marginRight:scaleSize(20),marginBottom:scaleSize(3), tintColor:'#000'}}
+                source={require('../../res/image/search.png')}/>
+            <Text style={{fontSize:setSpText2(10),marginRight:scaleSize(20)}}>搜索</Text>
         </TouchableOpacity>
     }
 

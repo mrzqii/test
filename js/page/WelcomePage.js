@@ -68,7 +68,7 @@ export default class WelcomePage extends Component {
                 <View style={styles.wxBtnWrapper}>
                     <ButtonView
                         btnStyle={styles.wxBtn}
-                        underlayColor=""
+                        underlayColor="#eee"
                         textStyle="去主页"
                         btnName="微信登陆"
                         onPress={() => {
@@ -80,7 +80,7 @@ export default class WelcomePage extends Component {
                 <View style={styles.telBtnWrapper}>
                     <ButtonView
                         btnStyle={styles.telBtn}
-                        underlayColor=""
+                        underlayColor="#eee"
                         textStyle={styles.telText}
                         btnName="账号密码登陆"
                         onPress={() => {

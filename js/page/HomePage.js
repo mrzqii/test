@@ -12,14 +12,17 @@ import {
     StyleSheet,
     Image,
     Text,
-    View
+    Alert,
+    View,
+    BackHandler
 } from 'react-native';
+import {scaleSize,scaleHeight,setSpText2,} from '../util/screenUtil'
 import TabNavigator from 'react-native-tab-navigator';
-import HomeIndex from '../page/Home/HomeIndex'
-import MyPage from '../page/my/MyPage'
-import EZSwiperDemo from '../demo/EZSwiper'
-import Swipper from '../demo/Swipper'
-import Xiding from '../demo/xiding'
+import HomeIndex from '../page/Home'
+import MyPage from '../page/My'
+import GoodGoods from '../page/GoodGoods'
+import Category from '../page/Category'
+ 
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
     android:
@@ -37,47 +40,59 @@ export default class HomePage extends Component {
         }
         
     }
+    componentDidMount(){
+    }
+     
     render() {
         const navigation = this.props.navigation;
         return (
             <View style={styles.container}>
-                <TabNavigator>
+                <TabNavigator
+                    tabBarStyle={{ height: scaleHeight(45), overflow: 'hidden',backgroundColor: '#fff', }}
+                >
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'tb_home'}
+                        title={'首页'}
+                        titleStyle={{fontSize:setSpText2(9)}}
                         // 导航文字选中的颜色
-                        selectedTitleStyle = {{color: '#2196F3'}} 
-                        title="首页"
-                        renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_polular.png')} />}
+                        selectedTitleStyle = {{color: '#FF3C50'}} 
+                        renderIcon={() => <Image style={styles.image} source={require('../../res/image/home.png')} />}
                         // 设置选中的颜色 注意这里的写法
-                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#2196F3'}]} source={require('../../res/images/ic_polular.png')} />}
+                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FF3C50'}]} source={require('../../res/image/home.png')} />}
                         badgeText="2"  // 设置有几个消息
                         onPress={() => this.setState({ selectedTab: 'tb_home' })}>
                         <HomeIndex navigation={navigation}/>
                     </TabNavigator.Item>
                     <TabNavigator.Item
-                        selected={this.state.selectedTab === 'tb_trending'}
-                        title="分类"
-                        selectedTitleStyle = {{color: '#2196F3'}} 
-                        renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_trending.png')} />}
-                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#2196F3'}]} source={require('../../res/images/ic_trending.png')} />}
-                        onPress={() => this.setState({ selectedTab: 'tb_trending' })}>
-                        <Swipper/>
+                        selected={this.state.selectedTab === 'tb_classify'}
+                        title={'分类'}
+                        titleStyle={{fontSize:setSpText2(9)}}
+                        // 导航文字选中的颜色
+                        selectedTitleStyle = {{color: '#FF3C50'}} 
+                        renderIcon={() => <Image style={styles.image} source={require('../../res/image/classify.png')} />}
+                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FF3C50'}]} source={require('../../res/image/classify.png')} />}
+                        onPress={() => this.setState({ selectedTab: 'tb_classify' })}>
+                        <Category navigation={navigation}/>
                     </TabNavigator.Item>
                     <TabNavigator.Item
-                        selected={this.state.selectedTab === 'tb_favorite'}
-                        title="购物车"
-                        selectedTitleStyle = {{color: '#2196F3'}} 
-                        renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_favorite.png')} />}
-                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#2196F3'}]} source={require('../../res/images/ic_favorite.png')} />}
-                        onPress={() => this.setState({ selectedTab: 'tb_favorite' })}>
-                        <EZSwiperDemo/>
+                        selected={this.state.selectedTab === 'tb_goodgoods'}
+                        title={'好物'}
+                        titleStyle={{fontSize:setSpText2(9)}}
+                        // 导航文字选中的颜色
+                        selectedTitleStyle = {{color: '#FF3C50'}} 
+                        renderIcon={() => <Image style={styles.image} source={require('../../res/image/goodgoods.png')} />}
+                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FF3C50'}]} source={require('../../res/image/goodgoods.png')} />}
+                        onPress={() => this.setState({ selectedTab: 'tb_goodgoods' })}>
+                        <GoodGoods  navigation={navigation}/>
                     </TabNavigator.Item>
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'tb_mine'}
-                        title="我的"
-                        selectedTitleStyle = {{color: '#2196F3'}} 
-                        renderIcon={() => <Image style={styles.image} source={require('../../res/images/ic_trending.png')} />}
-                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#2196F3'}]} source={require('../../res/images/ic_trending.png')} />}
+                        title={'我的'}
+                        titleStyle={{fontSize:setSpText2(9)}}
+                        // 导航文字选中的颜色
+                        selectedTitleStyle = {{color: '#FF3C50'}} 
+                        renderIcon={() => <Image style={styles.image} source={require('../../res/image/mine.png')} />}
+                        renderSelectedIcon={() => <Image style={[styles.image,{tintColor:'#FF3C50'}]} source={require('../../res/image/mine.png')} />}
                         onPress={() => this.setState({ selectedTab: 'tb_mine' })}>
                         <MyPage {...this.props}></MyPage>
                         {/* <Xiding/> */}
@@ -91,7 +106,6 @@ export default class HomePage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5FCFF',
     },
     page1: {
         flex:1,
@@ -102,7 +116,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'green',
     },
     image:{
-        height: 22,
-        width: 22
+        height:scaleHeight(19),
+        width: scaleSize(18),
+        tintColor:'#222222',
+        marginBottom: scaleSize(2.5),
     }
 });

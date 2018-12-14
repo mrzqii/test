@@ -24,10 +24,10 @@ export default class Swipper extends Component {
         }
         this.slide1 = this.props.slide
     }
-    rederImage(data){
+    rederImage(data,key){
         let Imageurl = data.goodsUrl
         return (
-            <View style={styles.slide375}>
+            <View style={styles.slide375} key={key}>
                 <Text style={styles.text}>{data.goodsTitle}</Text>
                 <Image
                     style={styles.img}
@@ -43,8 +43,8 @@ export default class Swipper extends Component {
               }}>
                  <Swiper style={styles.wrapper} style={{height:375}} showsButtons={false}
                 >
-                    {this.props.data.map((item)=>{
-                        return this.rederImage(item)
+                    {this.props.data.map((item,i)=>{
+                        return this.rederImage(item,i)
                     })}
                 </Swiper>
             </View>

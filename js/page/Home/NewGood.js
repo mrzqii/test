@@ -23,7 +23,7 @@ import GoodItem from './GoodItem'
 import ThemeRecommend from './ThemeRecommend'
 import Ezswiper from '../../common/Ezswiper';
 import EndLine from '../../common/EndLine';
-
+import {scaleSize,scaleHeight,setSpText2,} from '../../util/screenUtil'
 export default class NewGood extends Component {
     constructor(props){
         super(props);
@@ -103,21 +103,20 @@ export default class NewGood extends Component {
         }
         this.navigation = this.props.navigation
     }
-    goodItems(data,flag){
+    goodItems(data,flag,key){
         if(flag){
             return (
-                <GoodItem info={data} noLine={flag} navigation={this.navigation} />
+                <GoodItem key={key} info={data} noLine={flag} navigation={this.navigation} />
             )
         }
         return  (
-            <GoodItem info={data} navigation={this.navigation} />
+            <GoodItem key={key} info={data} navigation={this.navigation} />
         )
     }
     render() {
         
         return (
             <ScrollView>
-                 
                 <View style={styles.container}>
                     <View style={styles.swipperWapper}>
                         <Swipper
@@ -137,9 +136,9 @@ export default class NewGood extends Component {
                             {this.state.goodItemsData.map((item,i,arr) =>{
                                 let len = arr.length
                                 if(i === len-1){
-                                    return this.goodItems(item,true)
+                                    return this.goodItems(item,true,i)
                                 }
-                                return this.goodItems(item)
+                                return this.goodItems(item,false,i)
                             })}
                         </View>
                         <CuttingLine title={"你的风格"} />
@@ -150,7 +149,7 @@ export default class NewGood extends Component {
                         <View style={styles.themeRecommend}>
                             
                             {this.state.dataArray.map((item,i,arr) =>{
-                                    return  <ThemeRecommend data={item} />
+                                    return  <ThemeRecommend key={i} data={item} />
                             })}
                         </View>
                         <EndLine title={'没有更多了'}/> 

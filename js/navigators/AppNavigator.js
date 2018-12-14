@@ -8,15 +8,19 @@ import HomePage from '../page/HomePage'
 // import WebViewPage from '../page/WebViewPage'
 // import CustomKeyPage from '../page/my/CustomKeyPage'
 // import CustomTheme from '../page/my/CustomTheme'
-import MyPage from '../page/my/MyPage'
+import MyPage from '../page/My'
 import GoodsDetail from '../page/GoodsDetail/GoodsDetail'
 // import GoodItem from '../page/Home/GoodItem'
-import HomeIndex from '../page/Home/HomeIndex'
+import HomeIndex from '../page/Home'
 import NewGood from '../page/Home/NewGood'
 import Login from '../page/Login/Login'
 import Register from '../page/Login/Register'
-import UserInfo from '../page/my/UserInfo'
-import Address from '../page/my/UserInfo/Address'
+import UserInfo from '../page/My/UserInfo'
+import Address from '../page/My/UserInfo/Address'
+import HelpCenter from '../page/My/HelpCenter'
+import GoodGoods from '../page/GoodGoods'
+import Search from '../page/GoodGoods/Search'
+import Category from '../page/Category'
  
 
 export default AppNavigator = StackNavigator({
@@ -29,6 +33,14 @@ export default AppNavigator = StackNavigator({
     MyPage:{
         screen: MyPage
     },
+    // 好物
+    GoodGoods:{
+        screen: GoodGoods
+    },
+    // 搜索页面
+    Search:{
+        screen: Search
+    },
     // 用户头像 会员名 地址
     UserInfo:{
         screen: UserInfo
@@ -36,6 +48,14 @@ export default AppNavigator = StackNavigator({
     // 用户地址
     Address:{
         screen: Address
+    },
+    // 分类
+    Category:{
+        screen: Category
+    },
+    // 帮助中心
+    HelpCenter:{
+        screen: HelpCenter
     },
     // CustomKeyPage:{
     //     screen: CustomKeyPage
@@ -60,8 +80,6 @@ export default AppNavigator = StackNavigator({
     Register:{
         screen: Register
     }
-    
-    
 }, {
     navigationOptions: {
         header: null

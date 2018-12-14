@@ -1,4 +1,4 @@
-
+// 我的个人中心
 import React, { Component } from 'react';
 import {
     StyleSheet,
@@ -12,17 +12,19 @@ import {
     Platform,
     TouchableOpacity
 } from 'react-native';
+import {scaleSize,scaleHeight,setSpText2,} from '../../util/screenUtil'
 // import NavigationBar from '../../common/NavigationBar'
 // import Toast, {DURATION} from 'react-native-easy-toast' 
 import CustomKeyPage from './CustomKeyPage';
 import ButtonView from '../../common/ButtonView';
 import Xiding from '../../demo/xiding'
 import NavBar from '../../common/NavBar'
+ 
 
 let { width } = Dimensions.get('window')
 let navHeight = (Platform.OS === 'ios' ? 20 : 0) + 45
 
-const arrow = require('../../../res/pageImage/mq_arrow_right.png')
+const arrow = require('../../../res/image/mq_arrow_right.png')
 export default class MyPage extends Component {
     constructor(props) {
         super(props);
@@ -131,15 +133,16 @@ export default class MyPage extends Component {
 
         const { favorite, buyer } = this.state.userInfo
         return (
-            <View style={{ padding: 30, flex: 1 }}>
+            <View style={{ padding: 30, flex: 1}}>
                 <View style={styles.BuyerFavi}>
                     <View style={styles.Buyer}>
                         <Text>我的关注</Text>
                         <View style={styles.BuyerAvatar}>
                             <View style={{ flexDirection: 'row' }}>
-                                {buyer.map((item) => {
+                                {buyer.map((item,i) => {
                                     return (
                                         <Image
+                                            key={i}
                                             source={{ uri: item.buyerUrl }}
                                             style={{ width: 20, height: 20, borderRadius: 10 }}
                                         />
@@ -163,7 +166,7 @@ export default class MyPage extends Component {
                             >{favorite}</Text>
 
                             <Image
-                                style={[styles.arrow, { marginRight: 20 }]}
+                                style={[styles.arrow, { marginRight: 0 }]}
                                 source={arrow}
                             />
                         </View>
@@ -176,88 +179,94 @@ export default class MyPage extends Component {
         )
     }
     _renderItem() {
+        const { navigation } = this.props;
         const data = [
             [
                 {
-                    icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
+                    icon: require('../../../res/image/setting/footmark.png'),
                     title: '会员中心',
                     other: '仅需3秒,超值礼金等你额'
                 },
                 {
-                    icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
+                    icon: require('../../../res/image/setting/footmark.png'),
                     title: '我的订单',
                     other: ''
                 },
                 {
-                    icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
+                    icon: require('../../../res/image/setting/footmark.png'),
                     title: '我的售后',
                     other: ''
                 },
                 {
-                    icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
+                    icon: require('../../../res/image/setting/footmark.png'),
                     title: '消息中心',
                     other: '仅需3秒,超值礼金等你额'
                 },
             ],
             [
                 {
-                    icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
+                    icon: require('../../../res/image/setting/footmark.png'),
                     title: '分享有奖',
                     other: '3折优惠券'
                 },
                 {
-                    icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
+                    icon: require('../../../res/image/setting/footmark.png'),
                     title: '优惠卷',
                     other: ''
                 }
             ],
             [
                 {
-                    icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
+                    icon: require('../../../res/image/setting/footmark.png'),
                     title: '联系客服',
                     other: ''
                 },
                 {
-                    icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
+                    icon: require('../../../res/image/setting/footmark.png'),
                     title: '供应商入住申请',
                     other: ''
                 },
                 {
-                    icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
+                    icon: require('../../../res/image/setting/footmark.png'),
                     title: '帮助中心',
-                    other: ''
+                    other: '',
+                    navigate: 'HelpCenter'
                 }
             ],
             [
                 {
-                    icon: require('../../../res/pageImage/icon_share_reward_invited_people.png'),
+                    icon: require('../../../res/image/setting/footmark.png'),
                     title: '设置',
-                    other: ''
+                    other: '',
+                    navigate: 'HelpCenter'
                 }
             ]
         ]
 
-        return data.map((items) => {
+        return data.map((items,i) => {
             return (
-                <View>
+                <View key={i}>
                     {items.map((item, index) => {
                         return (
                             <TouchableHighlight
-                                underlayColor={'#666'}
+                                key={index}
+                                underlayColor={'#DDD'}
+                                onPress={() => {
+                                    navigation.navigate(item.navigate, { name: "动态的" })
+                                }}
                             >
                                 <View
-                                    key={index}
-                                    style={{ flexDirection: 'row', paddingLeft: 30, marginBottom: 40 }}>
+                                    style={styles.itemView}>
                                     <Image
                                         source={item.icon}
-                                        style={{ width: 30, height: 30 }}
+                                        style={{ width:scaleSize (20), height:scaleHeight( 19), tintColor: '#666', marginRight: scaleSize(10) }}
                                     />
-                                    <Text style={{ fontSize: 18 }}>{item.title}</Text>
+                                    <Text style={{ fontSize:setSpText2(15)}}>{item.title}</Text>
                                     {item.other ? <Text
-                                        style={[styles.otherText, { marginRight: 20 }]}
+                                        style={[styles.otherText, { marginRight:scaleSize(20) }]}
                                     >{item.other}</Text> : null}
                                     <Image
-                                        style={[styles.arrow2, { marginRight: 20 }]}
+                                        style={[styles.arrow2, { marginRight: scaleSize(20)}]}
                                         source={arrow}
                                     />
                                 </View>
@@ -285,18 +294,17 @@ export default class MyPage extends Component {
                     scrollEventThrottle={50}
                     style={{ paddingTop: 200 }}
                 >
-
-                    {this._renderBody()}
-                    {this._renderItem()}
                     <View
-                        style={{ height: 500, width: '100%' }}
+                        style={{ flex:1,backgroundColor: '#fff',paddingBottom:200, borderTopRightRadius: 20, borderTopLeftRadius: 20,overflow:'hidden'}}
                     >
+                        {this._renderBody()}
+                        {this._renderItem()}
                     </View>
                 </ScrollView>
             </View>
         );
     }
-
+ 
     //             <ButtonView
     //                 btnName='获取验证码'
     //                 btnStyle={{ width: 90, marginRight: 10, backgroundColor: '#D6D6D6' }}
@@ -310,7 +318,7 @@ export default class MyPage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#FAB9B2',
     },
     btn: {
         margin: 5,
@@ -318,22 +326,22 @@ const styles = StyleSheet.create({
         padding: 2
     },
     headSection: {
-
-        height: 200,
+        height:scaleSize(100),
         width: width,
         padding: 30,
-        backgroundColor: 'pink',
+        backgroundColor: '#FAB9B2',
         paddingTop: 60,
 
     },
     avatar: {
         flex: 1,
         flexDirection: 'row',
-
     },
     avatarImg: {
         width: 80,
         height: 80,
+        borderColor:'#fff',
+        borderWidth:2,
         borderRadius: 40,
         marginRight: 20
     },
@@ -346,7 +354,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     type: {
-        backgroundColor: '#999',
+        backgroundColor: '#DBAAA1',
         color: '#fff',
         fontSize: 12,
         padding: 5,
@@ -364,16 +372,17 @@ const styles = StyleSheet.create({
         right: 0
     },
     arrow2: {
-        width: 22,
-        height: 22,
+        width: scaleSize(22),
+        height: scaleHeight(22),
         position: 'absolute',
         top: 0,
         right: 0
     },
     otherText: {
         position: 'absolute',
-        top: 0,
-        right: 25
+        top: scaleSize(3),
+        right: 25,
+        fontSize:setSpText2(10)
     },
     BuyerFavi: {
         height: 100,
@@ -401,6 +410,12 @@ const styles = StyleSheet.create({
         width: '90%',
         height: 1,
         backgroundColor: '#eee',
-        marginBottom: 30
+        marginBottom: scaleSize(15)
+    },
+    itemView: {
+        flexDirection: 'row',
+        paddingLeft:scaleSize(20),
+        marginVertical: scaleSize(15),
+        alignItems: 'center'
     }
 });

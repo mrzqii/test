@@ -52,8 +52,10 @@ export default class GoodsAuthor extends Component {
                     }}>
                     <Image
                         style={{
-                            width: 25,
-                            height: 25
+                            width: 20,
+                            height: 18,
+                            tintColor:'red',
+                            marginLeft:5,marginRight:5
                         }}
                         source={follow}
                     />
@@ -67,12 +69,12 @@ export default class GoodsAuthor extends Component {
             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <Image
                     style={styles.recArrow}
-                    source={require('../../../res/pageImage/icon_left_arrow.png')}
+                    source={require('../../../res/image/icon_left_arrow.png')}
                 />
                 <Text style={{ fontSize: 18, color: '#000' }}>{avatarName + '的推荐'}</Text>
                 <Image
                     style={styles.recArrow}
-                    source={require('../../../res/pageImage/icon_right_arrow.png')}
+                    source={require('../../../res/image/icon_right_arrow.png')}
                 />
             </View>
         )
@@ -165,8 +167,8 @@ export default class GoodsAuthor extends Component {
                     />
                     <View style={{ flexDirection: 'row' }}>
                         <Image
-                            source={require('../../../res/pageImage/mq_ic_evaluate_normal.png')}
-                            style={{ width: 14, height: 14, top: 4 }}
+                            source={require('../../../res/image/praise.png')}
+                            style={{ width: 16, height: 15, top: 4,tintColor:'#333',marginRight:5 }}
                         />
                         <Text>{item.stars}</Text>
                     </View>
@@ -202,8 +204,8 @@ export default class GoodsAuthor extends Component {
     render() {
         let { avatarUrl, avatarName, authorDescrip, isFollow, recommend, note } = this.props.data
         let follow = this.state.isFollow ?
-            require('../../../res/images/ic_favorite_pink.png') :
-            require('../../../res/images/ic_favorite.png')
+            require('../../../res/image/favorited.png') :
+            require('../../../res/image/favorite.png')
         return (
             <View style={styles.container}>
                 <View style={styles.avartarWrapper}>

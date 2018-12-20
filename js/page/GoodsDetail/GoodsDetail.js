@@ -22,32 +22,20 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import CountDown from '../../common/CountDown'
 import ShoppingExplanation from '../../common/ShoppingExplanation'
 import GoodsAuthor from './GoodsAuthor'
-import videoUrl from '../../../res/pageImage/xinyun2017.4.11.mp4'
 import Video from 'react-native-video'
-import {scaleSize,scaleHeight,setSpText2,} from '../../util/screenUtil'
+import { scaleSize, scaleHeight, setSpText2, } from '../../util/screenUtil'
+import NavigationBar from '../../common/NavigationBar'
+import ViewUtils from '../../util/ViewUtils'
 const { width, height } = Dimensions.get('window')
 
-class MyVideo extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <View style={styles.videoWrapper}>
-                <Video
-                    url={videoUrl}
-                />
-            </View>
-        );
-    }
-}
 export default class GoodsDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            showThumbnail: true,
             goodsDetail: {
                 viewNum: 2121,
-                endTime: '2018-12-16',
+                endTime: '2018-12-22',
                 isCheck: false,
                 salePrice: 100,
                 payment: '', //定金
@@ -115,29 +103,33 @@ export default class GoodsDetail extends Component {
     }
     // 支付一元查看价格
     showPrice = () => {
-
         // 请求接口返回数据，如果成功这执行如下
         let newobj = Object.assign({}, this.state.goodsDetail, { isCheck: true })
         this.setState({
             goodsDetail: newobj
         })
-
     }
     render() {
-
         const navigation = this.props.navigation;
         // console.warn('这个商品的ID是' + navigation.state.params.name)
         let imageUrl = this.state.goodsDetail.detaiImage
         return (
             <View style={styles.container}>
-
+                <NavigationBar
+                    title={'详细'}
+                    statusBar={{ backgroundColor: 'steelblue', hidden: true }}
+                    style={{ backgroundColor: 'steelblue', }}
+                    leftButton={ViewUtils.getLeftButton(() => {
+                        navigation.goBack()
+                    })}
+                />
                 <ScrollView>
                     <View style={styles.sectionDetail}>
-                        <View style={{ flex: 1}}>
+                        <View style={{ flex: 1 }}>
                             <Video
-                            resizeMode={'stretch'}
-                                source={videoUrl}
-                                paused={false}
+                                resizeMode={'stretch'}
+                                source={{ uri: 'http://116.211.155.212/69769FD070C31828E796DF4C82/030020010053E07A61A547060A4F28705D5D61-9581-0271-3E43-F436A951A599.mp4?ccode=0502&duration=14&expire=18000&psid=3416afb517c1672c8a1f7ff9d0b9fe7e&ups_client_netip=76704957&ups_ts=1545199152&ups_userid=&utid=HPV8FEiwHG8CAXZwSc7HIbUC&vid=XNzUxMjMxNDg4&vkey=A671513ccd78ae8abdf567029c37c13ce&sp=' }}
+                                paused={true}
                                 controls={true}
                                 style={styles.backgroundVideo}
                             />
@@ -145,7 +137,7 @@ export default class GoodsDetail extends Component {
                         </View>
                         <View style={{ flex: 1 }}>
                             <Image
-                                style={{ width: '100%', height:scaleHeight(600) }}
+                                style={{ width: '100%', height: scaleHeight(600) }}
                                 source={{ uri: imageUrl }}
                             />
                         </View>
@@ -178,10 +170,10 @@ class StatusBar extends Component {
                         source={require('../../../res/image/rmb.png')}
                         style={{
                             top: -5,
-                            width:scaleSize(30),
+                            width: scaleSize(30),
                             height: scaleSize(30),
                             zIndex: 1000,
-                            tintColor:'yellow'
+                            tintColor: 'yellow'
                         }}
                     />
                 </View>
@@ -205,7 +197,7 @@ class StatusBar extends Component {
                     <Image
                         source={require('../../../res/image/view.png')}
                         style={{
-                            width:scaleSize(20),
+                            width: scaleSize(20),
                             height: scaleSize(20)
                         }}
                     />
@@ -233,7 +225,6 @@ class StatusBar extends Component {
                     <Text style={styles.salePrice}>{isCheck ? salePrice : '? 元'}</Text>
                 </View>
             </View>
-
         );
     }
 }
@@ -336,23 +327,23 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     viewNum: {
-        width:scaleSize (100),
-        height:scaleHeight(55),
+        width: scaleSize(70),
+        height: scaleHeight(55),
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        paddingLeft: scaleSize(20),
+        paddingLeft: scaleSize(10),
         alignItems: 'center',
         backgroundColor: '#3A3A3A',
 
     },
     text: {
-        fontSize:setSpText2(20),
+        fontSize: setSpText2(10),
         color: '#fff',
-        marginLeft:scaleSize(10),
+        marginLeft: scaleSize(10),
     },
     endTime: {
-        width:scaleSize(100),
-        height:scaleHeight(55),
+        width: scaleSize(120),
+        height: scaleHeight(55),
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: '#000',
@@ -365,7 +356,7 @@ const styles = StyleSheet.create({
     },
     payment: {
         flex: 1,
-        height:scaleHeight(55),
+        height: scaleHeight(55),
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
@@ -392,8 +383,8 @@ const styles = StyleSheet.create({
         marginLeft: scaleSize(13)
     },
     salePrice: {
-        width:scaleSize (35),
-        height:scaleHeight(25),
+        width: scaleSize(35),
+        height: scaleHeight(25),
         textAlign: 'center',
         color: '#fff',
         paddingTop: scaleSize(3),
@@ -438,7 +429,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     backgroundVideo: {
-        width:width-50,
+        width: width - 50,
         height: 400,
     }
 

@@ -7,32 +7,40 @@ import {
     Button,
     TextInput,
     View,
+    ActivityIndicator,
     TouchableOpacity
 } from 'react-native';
 import NavigationBar from '../../common/NavigationBar'
 import ViewUtils from '../../util/ViewUtils'
 import User from '../../models/user'
-export default class Login extends Component {
+import { asyncLoging } from "../../actions/user";
+import { connect } from 'react-redux'
+import Toast, {DURATION} from 'react-native-easy-toast'
+
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
             password: '',
             validcode: '',
-            valiImage: ''
+            valiImage: '',
+            isError:false
         }
     }
-    componentDidMount() {
-        this.setState({
-            valiImage: `http://10.0.2.2:18081/b2c/validcode.do?vtype=memberlogin`
-        })
+    // 当登陆状态发生变化的时候 loginStaus
+    componentDidUpdate(prevProps, prevState) {
+        const { navigation, loginStaus } = this.props;
+        if (prevProps.loginStaus !== loginStaus) {
+            navigation.navigate('HomePage', { name: "动态的" })
+        }
 
     }
     login() {
         const {
             username,
             password,
-           
+
         } = this.state
         if (!username) {
             // return Toast.warn('请输入用户名')
@@ -45,21 +53,25 @@ export default class Login extends Component {
         const params = {
             username,
             password,
-           
-            // login_type: "password"
         }
-        User.login(params).then((res) => {
-            console.warn(res);
+        this.props.dispatch(asyncLoging(params)).then(res=>{
+            if(res==="error"){
+                this.refs.toast.show('登陆出错了!',500);
+            }
         })
+         
 
     }
-    _changeValiImage = () => {
-        this.setState({
-            valiImage: `http://10.0.2.2:18081/b2c/validcode.do?vtype=memberlogin${new Date().getTime()}`
-        })
+    componentDidMount(){
+        // const { isError} = this.props;
+        // console.warn('isError::',isError);
+        // if(isError){
+        //     this.refs.toast.show('登陆出错了!',500);
+        // }
+        // 跳转页面的操作
     }
     render() {
-        const { navigation } = this.props;
+        const { navigation, isError, isLoding } = this.props;
         return (
             <View style={styles.container}>
                 <NavigationBar
@@ -71,6 +83,7 @@ export default class Login extends Component {
                         navigation.navigate('Register')
                     })}
                 />
+                {/* {isLoding ? <ActivityIndicator size="large" color="#0000ff" /> : null} */}
                 <View style={styles.view1}>
                     <TextInput
                         style={styles.textInput1}
@@ -147,11 +160,20 @@ export default class Login extends Component {
                     }}
                     title={'登陆'}
                 />
+                <Toast ref="toast"/>
 
             </View>
         );
     }
 }
+const mapStateToProps = state => {
+    return {
+        loginStaus: state.user.loginStaus,
+        isLoding: state.user.isLoding,
+        isError: state.user.isError
+    }
+}
+export default connect(mapStateToProps)(Login)
 
 const styles = StyleSheet.create({
     container: {

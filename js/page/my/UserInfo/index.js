@@ -31,7 +31,7 @@ export default class UserInfo extends Component {
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={'个人管理'}
+                    title={'修改个人信息'}
                     statusBar={{ backgroundColor: 'steelblue',hidden:true }}
                     leftButton={ViewUtils.getLeftButton(() => {
                         navigation.goBack(null)

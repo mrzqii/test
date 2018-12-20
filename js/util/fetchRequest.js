@@ -4,7 +4,9 @@ export default class Fetch {
         return fetch(url + "?" + toQueryString(param), {
             method: method,
         })
-            .then(response => response.json())
+            .then(response => {
+                return response.json()
+            })
             .then(responseJson => {
                 return responseJson;
             })

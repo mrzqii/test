@@ -35,7 +35,7 @@ export default class GoodGoods extends Component {
                         navigation.navigate('Search', { name: "动态的" })
                     })}
                 />
-                <Text>ttttttt</Text>
+                <Text>展示好物</Text>
             </View>
         );
     }

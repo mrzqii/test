@@ -21,6 +21,7 @@ import {
     Dimensions
 } from 'react-native';
 import {scaleSize,scaleHeight,setSpText2,} from '../../../util/screenUtil'
+import Goods from '../../../models/goods'
 const {width,height} = Dimensions.get('window')
 export default class Search extends Component {
     constructor(props) {
@@ -31,7 +32,8 @@ export default class Search extends Component {
             isShowSearch: true, // 是否显示搜索初始页面
             history: [], //历史搜索记录
             keyword: '',
-            hotSearch: ["口红", "毛衣", "袜子", "保温杯"]
+            hotSearch: ["口红", "毛衣", "袜子", "保温杯"],
+            goodsList:[]
         }
     }
     _retrieveData = async () => {
@@ -42,6 +44,8 @@ export default class Search extends Component {
                 })
             }
         })
+        
+      
     }
     
     _getData = () => {
@@ -68,6 +72,14 @@ export default class Search extends Component {
         setTimeout(() => {
             this._retrieveData()
         }, 1000)
+        Goods.goodSearch({keyword:this.state.keyword}).then(res=>{
+             
+            if(res.result==1){
+                this.setState({
+                    goodsList:res.data
+                })
+            }
+        })
     }
     // 清除历史纪录
     _clearStorage = () => {
@@ -201,6 +213,14 @@ export default class Search extends Component {
     componentWillMount() {
         this._retrieveData()
     }
+    // 单个商品的样式
+    _goodItem = (item)=>{
+        return (
+            <View>
+                <View></View>
+            </View>
+        )
+    }
     render() {
         const { navigation } = this.props;
         const { isShowSearch, textTop, textLeft } = this.state;
@@ -238,10 +258,8 @@ export default class Search extends Component {
                     <View style={{ flex: 1 }}>
                         {this._hotSearch()}
                         {this._history()}
-                    </View> : <Text>111111</Text>
+                    </View> : <Text>这个是搜索的结果</Text>
                 }
-
-
             </View>
         );
     }

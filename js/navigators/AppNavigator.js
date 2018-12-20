@@ -21,6 +21,8 @@ import HelpCenter from '../page/My/HelpCenter'
 import GoodGoods from '../page/GoodGoods'
 import Search from '../page/GoodGoods/Search'
 import Category from '../page/Category'
+import Setting from '../page/My/Setting'
+
  
 
 export default AppNavigator = StackNavigator({
@@ -56,6 +58,10 @@ export default AppNavigator = StackNavigator({
     // 帮助中心
     HelpCenter:{
         screen: HelpCenter
+    },
+    // 设置
+    Setting:{
+        screen: Setting
     },
     // CustomKeyPage:{
     //     screen: CustomKeyPage

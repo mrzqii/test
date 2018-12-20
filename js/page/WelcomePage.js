@@ -17,6 +17,8 @@ import ButtonView from '../common/ButtonView'
 import videoUrl from '../../res/pageImage/landing.mp4'
 import Video from 'react-native-video'
 
+import { connect } from 'react-redux'
+
 import Orientation from 'react-native-orientation';
 import { NavigationActions } from 'react-navigation';
 const resetAction = NavigationActions.reset({
@@ -28,13 +30,21 @@ const resetAction = NavigationActions.reset({
 
 
 const { width, height } = Dimensions.get('window')
-export default class WelcomePage extends Component {
+class WelcomePage extends Component {
     constructor(props) {
         super(props);
 
     }
 
     componentDidMount() {
+        const { navigation, loginStaus, state } = this.props;
+        console.warn('state::', state);
+        if (loginStaus) {
+            console.warn('已经登陆');
+            navigation.navigate('HomePage', { name: "动态的" })
+        } else {
+            console.warn('没有登陆');
+        }
         // Orientation.lockToLandscape();
         // new ThemeDao().getTheme().then((data) => {
         //     this.theme = data;
@@ -49,14 +59,14 @@ export default class WelcomePage extends Component {
     }
 
     componentWillUnmount() {
-        // this.timer && clearTimeout(this.timer);
     }
 
     render() {
+
         const { navigation } = this.props;
         return (
             <View style={styles.container}>
-                <View style={{ flex: 1}}>
+                <View style={{ flex: 1 }}>
                     <Video
                         source={videoUrl}
                         repeat={true}
@@ -92,6 +102,15 @@ export default class WelcomePage extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+
+    return {
+        loginStaus: state.user.loginStaus,
+        state, state
+    }
+}
+export default connect(mapStateToProps)(WelcomePage)
 const styles = StyleSheet.create({
     container: {
         flex: 1,

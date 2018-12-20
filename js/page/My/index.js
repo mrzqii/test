@@ -19,13 +19,15 @@ import CustomKeyPage from './CustomKeyPage';
 import ButtonView from '../../common/ButtonView';
 import Xiding from '../../demo/xiding'
 import NavBar from '../../common/NavBar'
- 
+import { connect } from 'react-redux'
 
 let { width } = Dimensions.get('window')
 let navHeight = (Platform.OS === 'ios' ? 20 : 0) + 45
 
 const arrow = require('../../../res/image/mq_arrow_right.png')
-export default class MyPage extends Component {
+
+
+class MyPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,7 +37,7 @@ export default class MyPage extends Component {
             userInfo: {
                 type: '新晋移民',
                 avatarUrl: 'https://gd1.alicdn.com/imgextra/i4/791105148/O1CN01uVEr3b1ntpQGtz8Cg_!!791105148.jpg_400x400.jpg',
-                avatarName: '叶子节点',
+                uname: '未登录',
                 Bought: 0,
                 focus: 32,
                 favorite: 1,
@@ -89,7 +91,7 @@ export default class MyPage extends Component {
     }
     _renderHead = () => {
         const { navigation } = this.props;
-        const { avatarUrl, avatarName, type, Bought, focus, favorite } = this.state.userInfo
+        const { avatarUrl, uname, type, Bought, focus, favorite } = this.state.userInfo
         return (
             <TouchableOpacity
                 onPress={() => {
@@ -108,9 +110,9 @@ export default class MyPage extends Component {
                             source={{ uri: avatarUrl }}
                             style={styles.avatarImg}
                         />
-                        <View style={styles.avatarName}>
+                        <View style={styles.uname}>
                             <View style={styles.name}>
-                                <Text style={{ color: '#fff', fontSize: 18 }}>{avatarName}</Text>
+                                <Text style={{ color: '#fff', fontSize: 18 }}>{uname}</Text>
                                 <Text style={styles.type}>{type}</Text>
                             </View>
                             <View style={styles.numbers}>
@@ -238,7 +240,7 @@ export default class MyPage extends Component {
                     icon: require('../../../res/image/setting/footmark.png'),
                     title: '设置',
                     other: '',
-                    navigate: 'HelpCenter'
+                    navigate: 'Setting'
                 }
             ]
         ]
@@ -278,6 +280,18 @@ export default class MyPage extends Component {
             )
         })
     }
+    componentDidMount(){
+        const {uname} = this.props.userInfo
+        console.warn('this.props.userInfo::',this.props.userInfo);
+        console.warn('uname:',uname);
+        if(uname){
+            let data = Object.assign({}, this.state.userInfo, { uname: uname })
+            this.setState({
+                userInfo : data
+            })
+        }
+        
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -314,7 +328,13 @@ export default class MyPage extends Component {
 
 
 }
-
+const mapStateToProps = state => {
+    return {
+        userInfo: state.user.userInfo
+         
+    }
+}
+export default connect(mapStateToProps)(MyPage)
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -345,7 +365,7 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         marginRight: 20
     },
-    avatarName: {
+    uname: {
         width: 200,
         height: 80,
         justifyContent: 'center',
